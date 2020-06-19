@@ -13,8 +13,8 @@ void main() {
     float b = abs(sin(u_time*.5))*.25;
     float c = abs(sin(u_time*.4))*.25;
 
-    float a2 = st.x;
-    float b2 = st.y;
+    float a2 = st.x*.25;
+    float b2 = st.y*.25;
 
 
 
