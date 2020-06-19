@@ -20,20 +20,20 @@ void main(){
     
     // a. The DISTANCE from the pixel to the center
         
-    float curX = .5 + sin(u_time*.33)/circleDistance;
-    float curY = .5 + cos(u_time*.33)/circleDistance;
+    float curX = .5 + sin(u_time*.33333333333)/circleDistance;
+    float curY = .5 + cos(u_time*.33333333333)/circleDistance;
     
     pct = distance(st,vec2(curX, curY));
     pct = step(pct, circleSize);
     
-    float cur2X = .5 + sin(u_time*.33+90.)/circleDistance;
-    float cur2Y = .5 + cos(u_time*.33+90.)/circleDistance;
+    float cur2X = .5 + sin(u_time*.33333333333+M_PI*2./3.)/circleDistance;
+    float cur2Y = .5 + cos(u_time*.33333333333+M_PI*2./3.)/circleDistance;
     
     float pct2 = distance(st,vec2(cur2X, cur2Y));
     pct2 = step(pct2, circleSize);
     
-    float cur3X = .5 + sin(u_time*.33+180.)/circleDistance;
-    float cur3Y = .5 + cos(u_time*.33+180.)/circleDistance;
+    float cur3X = .5 + sin(u_time*.33333333333+M_PI*4./3.)/circleDistance;
+    float cur3Y = .5 + cos(u_time*.33333333333+M_PI*4./3.)/circleDistance;
     
     float pct3 = distance(st,vec2(cur3X, cur3Y));
     pct3 = step(pct3, circleSize);
