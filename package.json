@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "websocket": "^1.0.31"
+  },
+  "engines": {
+    "node": "10.19.0"
   }
 }
