@@ -31,7 +31,8 @@ func _physics_process(delta):
 	move_vec = move_vec.rotated(Vector3(0, 1, 0), rotation.y)
 	move_vec *= MOVE_SPEED
 	move_vec.y = y_velo
-	move_and_slide(move_vec, Vector3(0, 1, 0))
+	
+	y_velo = move_and_slide(move_vec, Vector3(0, 1, 0)).y
    
 	var grounded = is_on_floor()
 	y_velo -= GRAVITY

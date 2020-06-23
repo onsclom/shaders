@@ -3,9 +3,9 @@ extends Node
 # The URL we will connect to
 
 # var websocket_url = "ws://echo.websocket.org"
-export var websocket_url = "ws://localhost:8080"
+#export var websocket_url = "ws://localhost:8080"
 
-#export var websocket_url = "ws://websocket-server-test-godot.herokuapp.com/" #this is deployed version
+export var websocket_url = "ws://websocket-server-test-godot.herokuapp.com/" #this is deployed version
 
 # Our WebSocketClient instance
 var _client = WebSocketClient.new()

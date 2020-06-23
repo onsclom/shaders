@@ -18,14 +18,9 @@ _global_script_class_icons={
 config/name="multiplayerTesting"
 run/main_scene="res://World.tscn"
 
-[display]
+[debug]
 
-window/size/width=160
-window/size/height=90
-window/size/test_width=640
-window/size/test_height=360
-window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+settings/stdout/print_fps=true
 
 [input]
 
@@ -62,7 +57,6 @@ jump={
 [rendering]
 
 quality/driver/driver_name="GLES2"
-quality/2d/use_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_clear_color=Color( 0.956863, 0.945098, 0.870588, 1 )
