@@ -1,13 +1,12 @@
 extends Node
 
 # The URL we will connect to
-
 # var websocket_url = "ws://echo.websocket.org"
-#export var websocket_url = "ws://localhost:8080"
-
-export var websocket_url = "ws://websocket-server-test-godot.herokuapp.com/" #this is deployed version
+export var websocket_url = "ws://localhost:8080"
+#export var websocket_url = "ws://websocket-server-test-godot.herokuapp.com/" #this is deployed version
 
 # Our WebSocketClient instance
+var id
 var _client = WebSocketClient.new()
 
 func _ready():
@@ -21,7 +20,7 @@ func _ready():
 	_client.connect("data_received", self, "_on_data")
 
 	# Initiate connection to the given URL.
-	var err = _client.connect_to_url(websocket_url, ['echo-protocol'] )
+	var err = _client.connect_to_url(websocket_url)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -39,8 +38,14 @@ func _connected(proto = ""):
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
 	
-	var test = {"name": "jeff"}
-	_client.get_peer(1).put_packet(JSON.print(test).to_utf8())
+#	var test = {"name": "jeff"}
+#	_client.get_peer(1).put_packet(JSON.print(test).to_utf8())
+
+	var connectedMessage = {"type": "connected"}
+	
+	#_client.get_peer(1).put_packet(var2bytes(testMsg))
+	_client.get_peer(1).put_packet(JSON.print(connectedMessage).to_utf8())
+
 
 func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet
@@ -48,16 +53,25 @@ func _on_data():
 	# using the MultiplayerAPI.
 	
 	#print("Got data from server: ", _client.get_peer(1).get_packet().get_string_from_utf8())
-	var data = JSON.parse( _client.get_peer(1).get_packet().get_string_from_utf8() )
+	#var data = bytes2var( _client.get_peer(1).get_packet() )
 	
-	if data.error == OK:
-		print("good!")
-		print(data.result)
-		
-		for x in data.result:
-			print(x)
-	else:
-		print("unexpected results")
+	var data = JSON.parse( _client.get_peer(1).get_packet().get_string_from_utf8() )
+
+	print(data.result)
+	print("here..")
+	
+	if (data.result["type"] == "connectedResponse"):
+		id = data.result["id"]
+		print(id)
+	
+#	if data.error == OK:
+#		print("good!")
+#		print(data.result)
+#
+#		for x in data.result:
+#			print(x)
+#	else:
+#		print("unexpected results")
 
 func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals

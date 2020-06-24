@@ -24,9 +24,8 @@ shape = SubResource( 1 )
 [node name="Spatial" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.22621, 6.2586 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.95515, 6.2586 )
 environment = SubResource( 2 )
-fov = 90.0
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 4 )
