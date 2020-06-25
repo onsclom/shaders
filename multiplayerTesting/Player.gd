@@ -40,6 +40,11 @@ func _physics_process(delta):
 	if grounded and Input.is_action_just_pressed("jump"):
 		just_jumped = true
 		y_velo = JUMP_FORCE
+	
+	if Input.is_action_just_released("jump") and y_velo >= 0:
+		y_velo /= 2
+		
+		
 	if grounded and y_velo <= 0:
 		y_velo = -0.1
 	if y_velo < -MAX_FALL_SPEED:

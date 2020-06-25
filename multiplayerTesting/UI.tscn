@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://CheckForTouchscreen.gd" type="Script" id=1]
+[ext_resource path="res://Joystick/Joystick.tscn" type="PackedScene" id=2]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -18,3 +19,7 @@ margin_bottom = 14.0
 text = "blah
 "
 script = ExtResource( 1 )
+
+[node name="Joystick" parent="." instance=ExtResource( 2 )]
+margin_top = -311.0
+margin_right = 379.0
