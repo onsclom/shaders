@@ -43,6 +43,7 @@ func _physics_process(delta):
 			msgText.release_focus()
 			var msg = msgText.text 
 			msgText.text = ""
+			WebsocketClient.send_message(msg)
 		
 		
 	move_vec = move_vec.normalized()

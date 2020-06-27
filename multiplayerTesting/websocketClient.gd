@@ -58,9 +58,8 @@ func _on_data():
 	var data = JSON.parse( _client.get_peer(1).get_packet().get_string_from_utf8() )
 
 	print(data.result)
-	print("here..")
 	
-	if (data.result["type"] == "connectedResponse"):
+	if (data.result.has("type") and data.result["type"] == "connectedResponse"):
 		id = data.result["id"]
 		print(id)
 	
@@ -72,6 +71,10 @@ func _on_data():
 #			print(x)
 #	else:
 #		print("unexpected results")
+
+func send_message(message):
+	var data = {"message": message}
+	_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
 
 func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals

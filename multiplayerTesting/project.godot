@@ -18,9 +18,9 @@ _global_script_class_icons={
 config/name="multiplayerTesting"
 run/main_scene="res://World.tscn"
 
-[debug]
+[autoload]
 
-settings/stdout/print_fps=true
+WebsocketClient="*res://websocketClient.gd"
 
 [input]
 
