@@ -3,7 +3,7 @@ extends Node
 # The URL we will connect to
 # var websocket_url = "ws://echo.websocket.org"
 #export var websocket_url = "ws://localhost:8080"
-export var websocket_url = "ws://godot-multiplayer-chat.herokuapp.com/" #this is deployed version
+export var websocket_url = "wss://godot-multiplayer-chat.herokuapp.com/" #this is deployed version
 
 # Our WebSocketClient instance
 var id
