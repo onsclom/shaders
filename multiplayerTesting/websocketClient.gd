@@ -56,8 +56,6 @@ func _on_data():
 	#var data = bytes2var( _client.get_peer(1).get_packet() )
 	
 	var data = JSON.parse( _client.get_peer(1).get_packet().get_string_from_utf8() )
-
-	print(data.result)
 	
 	if (data.result and data.result.has("type") and data.result["type"] == "connectedResponse"):
 		id = data.result["id"]
@@ -68,7 +66,6 @@ func _on_data():
 		if players.has(data.result["id"]):
 			#player is already created
 			players[data.result["id"]].messageStuff.messageText.text = data.result["message"]
-			print( data.result["transform"] )
 			
 			var blah = Transform( Vector3(), Vector3(), Vector3(), Vector3() )
 			
@@ -140,5 +137,4 @@ func _process(delta):
 func do_update(curMsg, transform):
 	if id != null:
 		var data = {"id":id, "message":curMsg, "type":"update", "transform": [ transform[0][0], transform[0][1], transform[0][2], transform[1][0], transform[1][1], transform[1][2], transform[2][0], transform[2][1], transform[2][2], transform[3][0], transform[3][1], transform[3][2] ]}
-		print(data)
 		_client.get_peer(1).put_packet(JSON.print(data).to_utf8())

@@ -63,8 +63,6 @@ wss.on("connection", ws => {
         }
         else
         {
-            console.log(messageData);
-    
             broadcast(ws.id, message);
         }
 
