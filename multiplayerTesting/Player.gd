@@ -11,6 +11,8 @@ const V_LOOK_SENS = 1.0
 onready var cam = $Spatial/Camera
 
 onready var msgText = $Control/VBoxContainer/LineEdit
+
+var curMsg = ""
  
 var y_velo = 0
  
@@ -41,9 +43,11 @@ func _physics_process(delta):
 		#msg has focus
 		if Input.is_action_just_pressed("text_enter"):
 			msgText.release_focus()
-			var msg = msgText.text 
+			curMsg = msgText.text 
 			msgText.text = ""
-			WebsocketClient.send_message(msg)
+			msgText.placeholder_text = curMsg
+			msgText.get_node("MsgTimer").start()
+			WebsocketClient.send_message(curMsg)
 		
 		
 	move_vec = move_vec.normalized()
@@ -68,3 +72,14 @@ func _physics_process(delta):
 		y_velo = -0.1
 	if y_velo < -MAX_FALL_SPEED:
 		y_velo = -MAX_FALL_SPEED
+
+
+func _on_Timer2_timeout():
+	msgText.placeholder_text = "/ to type"
+	curMsg = ""
+	pass # Replace with function body.
+
+
+func _on_UpdateTimer_timeout():
+	WebsocketClient.do_update(curMsg, get_global_transform())
+		

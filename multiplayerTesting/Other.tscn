@@ -39,7 +39,3 @@ script = ExtResource( 2 )
 
 [node name="Viewport" parent="Sprite3D" instance=ExtResource( 3 )]
 transparent_bg = true
-
-[node name="Timer" type="Timer" parent="Sprite3D"]
-wait_time = 3.0
-[connection signal="timeout" from="Sprite3D/Timer" to="Sprite3D" method="_on_Timer_timeout"]

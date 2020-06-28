@@ -5,8 +5,10 @@ extends KinematicBody
 # var a = 2
 # var b = "text"
 var y_velo = 0
-const GRAVITY = 0.98
+const GRAVITY = 0
 const MAX_FALL_SPEED = 30
+
+onready var messageStuff = $Sprite3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

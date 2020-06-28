@@ -9,7 +9,12 @@ export var websocket_url = "ws://localhost:8080"
 var id
 var _client = WebSocketClient.new()
 
+const otherPlayer = preload("res://Other.tscn")
+var world
+var players = {}
+
 func _ready():
+	get_tree().set_auto_accept_quit(false)
 	# Connect base signals to get notified of connection open, close, and errors.
 	_client.connect("connection_closed", self, "_closed")
 	_client.connect("connection_error", self, "_closed")
@@ -26,26 +31,21 @@ func _ready():
 		set_process(false)
 
 func _closed(was_clean = false):
-	# was_clean will tell you if the disconnection was correctly notified
-	# by the remote peer before closing the socket.
 	print("Closed, clean: ", was_clean)
 	set_process(false)
 
 func _connected(proto = ""):
-	# This is called on connection, "proto" will be the selected WebSocket
-	# sub-protocol (which is optional)
 	print("Connected with protocol: ", proto)
-	# You MUST always use get_peer(1).put_packet to send data to server,
-	# and not put_packet directly when not using the MultiplayerAPI.
-	
-#	var test = {"name": "jeff"}
-#	_client.get_peer(1).put_packet(JSON.print(test).to_utf8())
-
 	var connectedMessage = {"type": "connected"}
 	
 	#_client.get_peer(1).put_packet(var2bytes(testMsg))
 	_client.get_peer(1).put_packet(JSON.print(connectedMessage).to_utf8())
 
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		_client.disconnect_from_host()
+		get_tree().quit() # default behavior
 
 func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet
@@ -59,9 +59,65 @@ func _on_data():
 
 	print(data.result)
 	
-	if (data.result.has("type") and data.result["type"] == "connectedResponse"):
+	if (data.result and data.result.has("type") and data.result["type"] == "connectedResponse"):
 		id = data.result["id"]
 		print(id)
+	elif (data.result and data.result.has("type") and data.result["type"] == "update"):
+		#wowee new connection
+	
+		if players.has(data.result["id"]):
+			#player is already created
+			players[data.result["id"]].messageStuff.messageText.text = data.result["message"]
+			print( data.result["transform"] )
+			
+			var blah = Transform( Vector3(), Vector3(), Vector3(), Vector3() )
+			
+			players[data.result["id"]].set_transform(
+				Transform(
+					Vector3(
+				data.result["transform"][0],
+				data.result["transform"][1], 
+				data.result["transform"][2]
+					),
+					Vector3(
+				data.result["transform"][3], 
+				data.result["transform"][4], 
+				data.result["transform"][5]
+					),
+					Vector3(
+				data.result["transform"][6],  
+				data.result["transform"][7], 
+				data.result["transform"][8]
+					),
+					Vector3(
+				data.result["transform"][9], 
+				data.result["transform"][10], 
+				data.result["transform"][11]
+					)
+				)
+			)
+			
+#			players[data.result["id"]].transform[0][0] = players[data.result["transform"]][0]
+#			players[data.result["id"]].transform[0][1] = players[data.result["transform"]][1]
+#			players[data.result["id"]].transform[0][2] = players[data.result["transform"]][2]
+#			players[data.result["id"]].transform[1][0] = players[data.result["transform"]][3]
+#			players[data.result["id"]].transform[1][1] = players[data.result["transform"]][4]
+#			players[data.result["id"]].transform[1][2] = players[data.result["transform"]][5]
+#			players[data.result["id"]].transform[2][0] = players[data.result["transform"]][6]
+#			players[data.result["id"]].transform[2][1] = players[data.result["transform"]][7]
+#			players[data.result["id"]].transform[2][2] = players[data.result["transform"]][8]
+			
+		else:
+			#need to create player!
+			var newPlayer = otherPlayer.instance()
+			world.add_child(newPlayer)
+			newPlayer.global_transform = world.get_node("Spawn").global_transform
+			players[data.result["id"]] = newPlayer
+			
+			
+	elif (data.result and data.result.has("type") and data.result["type"] == "disconnectEvent"):
+		if players.has(data.result["id"]):
+			players[data.result["id"]].queue_free()
 	
 #	if data.error == OK:
 #		print("good!")
@@ -80,3 +136,9 @@ func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()
+	
+func do_update(curMsg, transform):
+	if id != null:
+		var data = {"id":id, "message":curMsg, "type":"update", "transform": [ transform[0][0], transform[0][1], transform[0][2], transform[1][0], transform[1][1], transform[1][2], transform[2][0], transform[2][1], transform[2][2], transform[3][0], transform[3][1], transform[3][2] ]}
+		print(data)
+		_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
