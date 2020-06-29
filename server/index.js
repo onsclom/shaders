@@ -65,6 +65,5 @@ wss.on("connection", ws => {
         {
             broadcast(ws.id, message);
         }
-
     });
 });

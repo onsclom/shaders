@@ -67,9 +67,9 @@ func _on_data():
 			#player is already created
 			players[data.result["id"]].messageStuff.messageText.text = data.result["message"]
 			
-			var blah = Transform( Vector3(), Vector3(), Vector3(), Vector3() )
-			
-			players[data.result["id"]].set_transform(
+			players[data.result["id"]].timeSinceUpdate = 0
+			players[data.result["id"]].lastTransform = players[data.result["id"]].transform
+			players[data.result["id"]].goalTransform = (
 				Transform(
 					Vector3(
 				data.result["transform"][0],

@@ -38,4 +38,5 @@ texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Viewport" parent="Sprite3D" instance=ExtResource( 3 )]
+size = Vector2( 4000, 100 )
 transparent_bg = true
