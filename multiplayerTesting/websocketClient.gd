@@ -13,6 +13,10 @@ const otherPlayer = preload("res://Other.tscn")
 var world
 var players = {}
 
+var typingAnimation = [".", "..", "...", ".."]
+
+var timeSince = 0
+
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	# Connect base signals to get notified of connection open, close, and errors.
@@ -66,6 +70,9 @@ func _on_data():
 		if players.has(data.result["id"]):
 			#player is already created
 			players[data.result["id"]].messageStuff.messageText.text = data.result["message"]
+			
+			if data.result["message"] == "" and data.result["typing"] == true:
+				players[data.result["id"]].messageStuff.messageText.text = typingAnimation[int(timeSince*2) % 4]
 			
 			players[data.result["id"]].timeSinceUpdate = 0
 			players[data.result["id"]].lastTransform = players[data.result["id"]].transform
@@ -130,11 +137,12 @@ func send_message(message):
 	_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
 
 func _process(delta):
+	timeSince += delta
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()
 	
-func do_update(curMsg, transform):
+func do_update(typing, curMsg, transform):
 	if id != null:
-		var data = {"id":id, "message":curMsg, "type":"update", "transform": [ transform[0][0], transform[0][1], transform[0][2], transform[1][0], transform[1][1], transform[1][2], transform[2][0], transform[2][1], transform[2][2], transform[3][0], transform[3][1], transform[3][2] ]}
+		var data = {"typing":typing, "id":id, "message":curMsg, "type":"update", "transform": [ transform[0][0], transform[0][1], transform[0][2], transform[1][0], transform[1][1], transform[1][2], transform[2][0], transform[2][1], transform[2][2], transform[3][0], transform[3][1], transform[3][2] ]}
 		_client.get_peer(1).put_packet(JSON.print(data).to_utf8())

@@ -13,6 +13,7 @@ onready var cam = $Spatial/Camera
 onready var msgText = $Control/VBoxContainer/LineEdit
 
 var curMsg = ""
+var isTyping = false
  
 var y_velo = 0
  
@@ -31,6 +32,7 @@ func _physics_process(delta):
 	var move_vec = Vector3()
 	
 	if (!msgText.has_focus()):
+		isTyping = false
 		if Input.is_action_pressed("move_forwards"):
 			move_vec.z -= 1
 		if Input.is_action_pressed("move_backwards"):
@@ -40,6 +42,7 @@ func _physics_process(delta):
 		if Input.is_action_pressed("move_left"):
 			rotation_degrees.y += H_LOOK_SENS*delta*150
 	else:
+		isTyping = true
 		#msg has focus
 		if Input.is_action_just_pressed("text_enter"):
 			msgText.release_focus()
@@ -67,19 +70,16 @@ func _physics_process(delta):
 	if Input.is_action_just_released("jump") and y_velo >= 0:
 		y_velo /= 2
 		
-		
 	if grounded and y_velo <= 0:
 		y_velo = -0.1
 	if y_velo < -MAX_FALL_SPEED:
 		y_velo = -MAX_FALL_SPEED
-
 
 func _on_Timer2_timeout():
 	msgText.placeholder_text = "/ to type"
 	curMsg = ""
 	pass # Replace with function body.
 
-
 func _on_UpdateTimer_timeout():
-	WebsocketClient.do_update(curMsg, get_global_transform())
+	WebsocketClient.do_update(isTyping, curMsg, get_global_transform())
 		
