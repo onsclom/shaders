@@ -12,6 +12,8 @@ onready var cam = $Spatial/Camera
 
 onready var msgText = $Control/VBoxContainer/LineEdit
 
+onready var joystick = $Control/Joystick
+
 var curMsg = ""
 var isTyping = false
  
@@ -33,13 +35,13 @@ func _physics_process(delta):
 	
 	if (!msgText.has_focus()):
 		isTyping = false
-		if Input.is_action_pressed("move_forwards"):
+		if Input.is_action_pressed("move_forwards") or joystick.output.y < -.3:
 			move_vec.z -= 1
-		if Input.is_action_pressed("move_backwards"):
+		if Input.is_action_pressed("move_backwards") or joystick.output.y > .3:
 			move_vec.z += 1
-		if Input.is_action_pressed("move_right"):
+		if Input.is_action_pressed("move_right") or joystick.output.x > .3:
 			rotation_degrees.y -= H_LOOK_SENS*delta*150
-		if Input.is_action_pressed("move_left"):
+		if Input.is_action_pressed("move_left") or joystick.output.x < -.3:
 			rotation_degrees.y += H_LOOK_SENS*delta*150
 	else:
 		isTyping = true

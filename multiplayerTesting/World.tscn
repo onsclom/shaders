@@ -13,7 +13,8 @@ material = SubResource( 1 )
 data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
 
 [sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.94902, 0.8, 0.560784, 1 )
+flags_transparent = true
+albedo_color = Color( 0.94902, 0.8, 0.560784, 0 )
 
 [sub_resource type="CubeMesh" id=5]
 material = SubResource( 4 )
@@ -68,7 +69,7 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="MeshInstance15" type="MeshInstance" parent="."]
-transform = Transform( -9.70393e-07, 0, 102.3, 0, 34.8, 0, -22.2, 0, -4.47168e-06, 8, 29, -56 )
+transform = Transform( -9.70393e-07, 0, 102.3, 0, 34.8, 0, -22.2, 0, -4.47168e-06, 8, 29, -55 )
 mesh = SubResource( 5 )
 material/0 = null
 
