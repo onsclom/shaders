@@ -9,6 +9,8 @@ export var websocket_url = "wss://godot-multiplayer-chat.herokuapp.com/" #this i
 var id
 var _client = WebSocketClient.new()
 
+var player
+
 const otherPlayer = preload("res://Other.tscn")
 var world
 var players = {}

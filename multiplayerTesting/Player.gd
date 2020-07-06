@@ -10,9 +10,8 @@ const V_LOOK_SENS = 1.0
  
 onready var cam = $Spatial/Camera
 
-onready var msgText = $Control/VBoxContainer/LineEdit
-
-onready var joystick = $Control/Joystick
+onready var msgText = get_node("../../../Control/VBoxContainer/LineEdit")
+onready var joystick = get_node("../../../Control/Joystick")
 
 var curMsg = ""
 var isTyping = false
@@ -21,6 +20,7 @@ var y_velo = 0
  
 func _ready():
 	pass
+	WebsocketClient.player = self
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 func _process(delta):
@@ -33,7 +33,7 @@ func _process(delta):
 func _physics_process(delta):
 	var move_vec = Vector3()
 	
-	if (!msgText.has_focus()):
+	if (msgText != null and !msgText.has_focus()):
 		isTyping = false
 		if Input.is_action_pressed("move_forwards") or joystick.output.y < -.3:
 			move_vec.z -= 1
