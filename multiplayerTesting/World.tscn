@@ -163,8 +163,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
 
 [node name="Spawn" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
-
-[node name="DirectionalLight2" type="DirectionalLight" parent="."]
-transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 14.7851, 0 )
-light_energy = 0.5
-light_indirect_energy = 0.5

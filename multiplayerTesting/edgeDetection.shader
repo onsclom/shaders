@@ -24,7 +24,7 @@ void fragment() {
 	avg = step(leniancy, avg);
 	
     COLOR.xyz = vec3(avg)*vec3(0.0) + (1.0-avg)*texture(TEXTURE, SCREEN_UV).xyz;
-	 COLOR.xyz = vec3(avg)*vec3(0.0) + (1.0-avg)*vec3(1.0);
+	//COLOR.xyz = vec3(avg)*vec3(1.0) + (1.0-avg)*vec3(1.0);
 	
 	
 	//if 
